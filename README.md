@@ -2,7 +2,6 @@
 
 A comprehensive full-stack application for creating AI-powered educational courses with multimedia integration. Built with Next.js, React, TypeScript, and modern web technologies.
 
-![AI Course Generator](https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop)
 
 ## ✨ Features
 
