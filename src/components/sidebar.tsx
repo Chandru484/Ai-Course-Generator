@@ -19,8 +19,8 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
   { name: 'My Courses', href: '/dashboard/courses', icon: BookOpen },
   { name: 'Create Course', href: '/dashboard/create', icon: Plus },
-  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
-  { name: 'Students', href: '/dashboard/students', icon: Users },
+  { name: 'Learning Analytics', href: '/dashboard/analytics', icon: BarChart3 },
+  { name: 'Community Learners', href: '/dashboard/students', icon: Users },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
 

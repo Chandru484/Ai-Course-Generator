@@ -54,19 +54,19 @@ export default function Hero() {
               </Link>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">10K+</div>
-                <div className="text-sm text-gray-600">Courses Created</div>
+            {/* Open Source & Learning Highlights */}
+            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-slate-200">
+              <div className="text-center sm:text-left">
+                <div className="text-2xl font-bold text-blue-600">100% Free</div>
+                <div className="text-sm text-gray-600">Open-Source Core</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">50K+</div>
-                <div className="text-sm text-gray-600">Happy Students</div>
+              <div className="text-center sm:text-left">
+                <div className="text-2xl font-bold text-purple-600">Modular</div>
+                <div className="text-sm text-gray-600">AI Learning Tracks</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">4.9★</div>
-                <div className="text-sm text-gray-600">User Rating</div>
+              <div className="text-center sm:text-left">
+                <div className="text-2xl font-bold text-emerald-600">Community</div>
+                <div className="text-sm text-gray-600">Driven Knowledge</div>
               </div>
             </div>
           </div>

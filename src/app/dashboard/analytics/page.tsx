@@ -70,32 +70,30 @@ export default function AnalyticsPage() {
         <div className="bg-white rounded-xl p-6 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Students</p>
-              <p className="text-3xl font-bold text-gray-900">{analytics?.totalStudents?.toLocaleString() || 0}</p>
+              <p className="text-sm font-medium text-gray-600">Learning Paths</p>
+              <p className="text-3xl font-bold text-gray-900">{analytics?.totalCourses || 0}</p>
             </div>
             <div className="bg-green-100 p-3 rounded-lg">
               <Users className="h-6 w-6 text-green-600" />
             </div>
           </div>
           <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
-            +18% from last month
+            Open Curriculums
           </div>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">${analytics?.totalRevenue?.toLocaleString() || 0}</p>
+              <p className="text-sm font-medium text-gray-600">Access Tier</p>
+              <p className="text-3xl font-bold text-purple-600">Free &amp; Open</p>
             </div>
             <div className="bg-purple-100 p-3 rounded-lg">
-              <DollarSign className="h-6 w-6 text-purple-600" />
+              <Target className="h-6 w-6 text-purple-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
-            +23% from last month
+          <div className="mt-4 flex items-center text-sm text-purple-600">
+            No Paywalls
           </div>
         </div>
 

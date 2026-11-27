@@ -67,68 +67,67 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats Cards */}
+      {/* Learning Metrics Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl p-6 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Courses</p>
-              <p className="text-3xl font-bold text-gray-900">{analytics?.totalCourses || 0}</p>
+              <p className="text-3xl font-bold text-gray-900">{courses.length}</p>
             </div>
             <div className="bg-blue-100 p-3 rounded-lg">
               <BookOpen className="h-6 w-6 text-blue-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
-            +12% from last month
+          <div className="mt-4 flex items-center text-sm text-blue-600">
+            Open-Source Library
           </div>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Students</p>
-              <p className="text-3xl font-bold text-gray-900">{analytics?.totalStudents?.toLocaleString() || 0}</p>
-            </div>
-            <div className="bg-green-100 p-3 rounded-lg">
-              <Users className="h-6 w-6 text-green-600" />
-            </div>
-          </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
-            +18% from last month
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">${analytics?.totalRevenue?.toLocaleString() || 0}</p>
+              <p className="text-sm font-medium text-gray-600">Total Modules</p>
+              <p className="text-3xl font-bold text-gray-900">
+                {courses.reduce((acc, c) => acc + (c.chapters?.length || 0), 0)}
+              </p>
             </div>
             <div className="bg-purple-100 p-3 rounded-lg">
               <TrendingUp className="h-6 w-6 text-purple-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
-            +23% from last month
+          <div className="mt-4 flex items-center text-sm text-purple-600">
+            Curated Chapters
           </div>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Rating</p>
-              <p className="text-3xl font-bold text-gray-900">4.9</p>
+              <p className="text-sm font-medium text-gray-600">Platform Access</p>
+              <p className="text-3xl font-bold text-green-600">100% Free</p>
             </div>
-            <div className="bg-yellow-100 p-3 rounded-lg">
-              <Star className="h-6 w-6 text-yellow-600" />
+            <div className="bg-green-100 p-3 rounded-lg">
+              <Star className="h-6 w-6 text-green-600" />
             </div>
           </div>
           <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
-            +0.2 from last month
+            Public Knowledge
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Engine Type</p>
+              <p className="text-3xl font-bold text-gray-900">AI Tutor</p>
+            </div>
+            <div className="bg-amber-100 p-3 rounded-lg">
+              <BookOpen className="h-6 w-6 text-amber-600" />
+            </div>
+          </div>
+          <div className="mt-4 flex items-center text-sm text-amber-600">
+            Self-Paced Learning
           </div>
         </div>
       </div>

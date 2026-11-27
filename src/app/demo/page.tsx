@@ -121,11 +121,11 @@ export default function DemoPage() {
             <div className="bg-white rounded-xl p-6 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Students</p>
-                  <p className="text-3xl font-bold text-gray-900">{analytics?.totalStudents?.toLocaleString() || 0}</p>
+                  <p className="text-sm font-medium text-gray-600">Access Tier</p>
+                  <p className="text-3xl font-bold text-green-600">Free</p>
                 </div>
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <Users className="h-6 w-6 text-green-600" />
+                  <BookOpen className="h-6 w-6 text-green-600" />
                 </div>
               </div>
             </div>
@@ -133,8 +133,8 @@ export default function DemoPage() {
             <div className="bg-white rounded-xl p-6 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                  <p className="text-3xl font-bold text-gray-900">${analytics?.totalRevenue?.toLocaleString() || 0}</p>
+                  <p className="text-sm font-medium text-gray-600">License</p>
+                  <p className="text-3xl font-bold text-purple-600">Open</p>
                 </div>
                 <div className="bg-purple-100 p-3 rounded-lg">
                   <TrendingUp className="h-6 w-6 text-purple-600" />
@@ -145,8 +145,8 @@ export default function DemoPage() {
             <div className="bg-white rounded-xl p-6 shadow-sm border">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Rating</p>
-                  <p className="text-3xl font-bold text-gray-900">4.9</p>
+                  <p className="text-sm font-medium text-gray-600">Community Tracks</p>
+                  <p className="text-3xl font-bold text-blue-600">100%</p>
                 </div>
                 <div className="bg-yellow-100 p-3 rounded-lg">
                   <Star className="h-6 w-6 text-yellow-600" />
