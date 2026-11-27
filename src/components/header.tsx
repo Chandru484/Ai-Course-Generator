@@ -15,7 +15,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2.5">
-            <div className="bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 p-2 rounded-xl shadow-md shadow-blue-500/20">
+            <div className="bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 p-2 rounded-xl shadow-md shadow-emerald-500/20">
               <BookOpen className="h-5 w-5 text-white" />
             </div>
             <span className="text-lg font-black tracking-tight gradient-text">AI Course Studio</span>
@@ -23,19 +23,19 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-            <Link href="/" className="text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/" className="text-slate-600 hover:text-emerald-600 transition-colors">
               Home
             </Link>
-            <Link href="/features" className="text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/features" className="text-slate-600 hover:text-emerald-600 transition-colors">
               Features
             </Link>
-            <Link href="/about" className="text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/about" className="text-slate-600 hover:text-emerald-600 transition-colors">
               About
             </Link>
-            <Link href="/contact" className="text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/contact" className="text-slate-600 hover:text-emerald-600 transition-colors">
               Contact
             </Link>
-            <Link href="/demo" className="text-slate-600 hover:text-blue-600 transition-colors">
+            <Link href="/demo" className="text-slate-600 hover:text-emerald-600 transition-colors">
               Demo
             </Link>
           </nav>
