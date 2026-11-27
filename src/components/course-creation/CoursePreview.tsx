@@ -153,7 +153,7 @@ export default function CoursePreview() {
           <div>
             <h4 className="font-medium text-blue-900 mb-2">Ready to Generate</h4>
             <p className="text-blue-700 text-sm">
-              Click "Generate Course" to create your AI-powered course. This process typically takes 30-60 seconds 
+              Click &quot;Generate Course&quot; to create your AI-powered course. This process typically takes 30-60 seconds 
               and will create a comprehensive course structure with chapters, content, and multimedia elements.
             </p>
           </div>

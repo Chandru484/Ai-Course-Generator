@@ -165,7 +165,7 @@ export default function DemoPage() {
                 <div className="text-center py-12">
                   <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No courses yet</h3>
-                  <p className="text-gray-600 mb-6">Click "Create Demo Course" above to generate a sample course.</p>
+                  <p className="text-gray-600 mb-6">Click &quot;Create Demo Course&quot; above to generate a sample course.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -205,7 +205,7 @@ export default function DemoPage() {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
             <h3 className="text-lg font-medium text-blue-900 mb-4">How to Test the Course Generator</h3>
             <div className="space-y-3 text-blue-800">
-              <p>• Click "Create Demo Course" above to instantly generate a sample course</p>
+              <p>• Click &quot;Create Demo Course&quot; above to instantly generate a sample course</p>
               <p>• The course will include 5 chapters with detailed content and YouTube videos</p>
               <p>• All data is generated locally - no external APIs required</p>
               <p>• This demo mode works without authentication or API keys</p>
