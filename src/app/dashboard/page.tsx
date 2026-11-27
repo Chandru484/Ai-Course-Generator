@@ -2,17 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { BookOpen, Plus, Users, TrendingUp, Star } from 'lucide-react'
+import { BookOpen, Plus, Sparkles, Layers, ArrowRight, Play, Clock, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Course } from '@/types'
-import { DemoAPIService } from '@/lib/demo-api'
-import { RealAPIService } from '@/lib/real-api'
-import { FastDemoAPIService } from '@/lib/fast-demo-api'
 import { EnhancedAPIService } from '@/lib/enhanced-api'
 
 export default function DashboardPage() {
   const [courses, setCourses] = useState<Course[]>([])
-  const [analytics, setAnalytics] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -22,15 +18,8 @@ export default function DashboardPage() {
   const loadDashboardData = async () => {
     try {
       setLoading(true)
-      
-      // Use enhanced API for better content
-      const [coursesData, analyticsData] = await Promise.all([
-        EnhancedAPIService.getCourses(),
-        EnhancedAPIService.getAnalytics()
-      ])
-      
+      const coursesData = await EnhancedAPIService.getCourses()
       setCourses(coursesData)
-      setAnalytics(analyticsData)
     } catch (error) {
       console.error('Error loading dashboard data:', error)
     } finally {
@@ -38,118 +27,135 @@ export default function DashboardPage() {
     }
   }
 
+  const totalModules = courses.reduce((acc, c) => acc + (c.chapters?.length || 0), 0)
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="flex items-center justify-center min-h-[450px]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="animate-spin rounded-full h-10 w-10 border-3 border-blue-600 border-t-transparent"></div>
+          <p className="text-sm text-slate-500 font-medium">Loading your learning space...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
-            <p className="text-blue-100">
-              Ready to create your next amazing course?
+    <div className="space-y-8 max-w-7xl mx-auto">
+      {/* Modern Gradient Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-8 md:p-10 text-white shadow-xl border border-slate-800">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-300 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5" /> Open-Source AI Studio
+            </div>
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+              Welcome to Your Learning Lab
+            </h1>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+              Explore your active courses or craft a tailored new curriculum on any concept in seconds.
             </p>
           </div>
+
           <Link href="/dashboard/create">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+            <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-2xl px-6 py-6 shadow-lg shadow-blue-500/20 whitespace-nowrap">
               <Plus className="mr-2 h-5 w-5" />
-              Create New Course
+              Generate New Course
             </Button>
           </Link>
         </div>
       </div>
 
-      {/* Stats Cards */}
-      {/* Learning Metrics Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
+      {/* Modern Learning Metrics Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Courses</p>
-              <p className="text-3xl font-bold text-gray-900">{courses.length}</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Courses</p>
+              <p className="text-3xl font-extrabold text-slate-900 mt-1">{courses.length}</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <BookOpen className="h-6 w-6 text-blue-600" />
+            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
+              <BookOpen className="w-6 h-6" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-blue-600">
-            Open-Source Library
-          </div>
+          <p className="mt-4 text-xs font-medium text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full inline-block">
+            In Your Library
+          </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Modules</p>
-              <p className="text-3xl font-bold text-gray-900">
-                {courses.reduce((acc, c) => acc + (c.chapters?.length || 0), 0)}
-              </p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Curated Chapters</p>
+              <p className="text-3xl font-extrabold text-slate-900 mt-1">{totalModules}</p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-purple-600" />
+            <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center">
+              <Layers className="w-6 h-6" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-purple-600">
-            Curated Chapters
-          </div>
+          <p className="mt-4 text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full inline-block">
+            Modular Learning
+          </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Platform Access</p>
-              <p className="text-3xl font-bold text-green-600">100% Free</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Platform Access</p>
+              <p className="text-3xl font-extrabold text-emerald-600 mt-1">100% Free</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-lg">
-              <Star className="h-6 w-6 text-green-600" />
+            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center">
+              <CheckCircle className="w-6 h-6" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
-            Public Knowledge
-          </div>
+          <p className="mt-4 text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full inline-block">
+            Community Open Core
+          </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Engine Type</p>
-              <p className="text-3xl font-bold text-gray-900">AI Tutor</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">AI Tutor Engine</p>
+              <p className="text-3xl font-extrabold text-purple-600 mt-1">Active</p>
             </div>
-            <div className="bg-amber-100 p-3 rounded-lg">
-              <BookOpen className="h-6 w-6 text-amber-600" />
+            <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center">
+              <Sparkles className="w-6 h-6" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-amber-600">
-            Self-Paced Learning
-          </div>
+          <p className="mt-4 text-xs font-medium text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full inline-block">
+            Self-Paced Mastery
+          </p>
         </div>
       </div>
 
-      {/* Recent Courses */}
-      <div className="bg-white rounded-xl shadow-sm border">
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-gray-900">Recent Courses</h2>
-            <Link href="/dashboard/courses">
-              <Button variant="outline">View All</Button>
-            </Link>
+      {/* Course List Section */}
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden">
+        <div className="p-6 md:p-8 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">Your Learning Paths</h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Pick up where you left off or begin a new lesson</p>
           </div>
+          <Link href="/dashboard/courses">
+            <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-medium">
+              View All <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </Link>
         </div>
-        <div className="p-6">
+
+        <div className="p-6 md:p-8">
           {courses.length === 0 ? (
-            <div className="text-center py-12">
-              <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No courses yet</h3>
-              <p className="text-gray-600 mb-6">Get started by creating your first course with AI assistance.</p>
-              <Link href="/dashboard/create">
-                <Button>
+            <div className="text-center py-16 max-w-sm mx-auto space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto">
+                <BookOpen className="w-8 h-8" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">No courses created yet</h3>
+              <p className="text-slate-500 text-sm">
+                Type any topic—from Python to Machine Learning—and generate your first course in 30 seconds.
+              </p>
+              <Link href="/dashboard/create" className="block pt-2">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md">
                   <Plus className="mr-2 h-4 w-4" />
                   Create Your First Course
                 </Button>
@@ -157,30 +163,50 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.slice(0, 6).map((course) => (
-                <div key={course.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
-                    {course.imageUrl ? (
-                      <img
-                        src={course.imageUrl}
+              {courses.map((course) => (
+                <div 
+                  key={course.id} 
+                  className="group bg-white rounded-2xl border border-slate-200/90 hover:border-blue-400/60 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="aspect-[16/9] bg-slate-100 relative overflow-hidden">
+                      <img 
+                        src={course.imageUrl || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop&q=80'} 
                         alt={course.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <BookOpen className="h-8 w-8 text-gray-400" />
-                      </div>
-                    )}
+                      <span className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-900/80 text-white backdrop-blur-md">
+                        {course.category}
+                      </span>
+                    </div>
+
+                    <div className="p-5 space-y-2">
+                      <h3 className="font-bold text-slate-900 text-lg group-hover:text-blue-600 transition-colors line-clamp-1">
+                        {course.title}
+                      </h3>
+                      <p className="text-slate-600 text-xs leading-relaxed line-clamp-2">
+                        {course.description}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{course.title}</h3>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{course.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                      {course.category}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {course.chapters.length} chapters
-                    </span>
+
+                  <div className="p-5 pt-0">
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 mb-4">
+                      <span className="flex items-center gap-1 font-medium">
+                        <Layers className="w-3.5 h-3.5 text-blue-500" />
+                        {course.chapters?.length || 0} Modules
+                      </span>
+                      <span className="flex items-center gap-1 font-medium">
+                        <Clock className="w-3.5 h-3.5 text-purple-500" />
+                        {course.duration || 1} Hours
+                      </span>
+                    </div>
+
+                    <Link href={`/dashboard/courses/${course.id}`} className="block">
+                      <Button className="w-full bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-xs font-semibold py-2.5 transition-colors">
+                        <Play className="w-3.5 h-3.5 mr-1.5 fill-current" /> Continue Course
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -188,30 +214,6 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
-
-      {/* Recent Activity */}
-      {analytics?.recentActivity && (
-        <div className="bg-white rounded-xl shadow-sm border">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
-          </div>
-          <div className="p-6">
-            <div className="space-y-4">
-              {analytics.recentActivity.map((activity: any, index: number) => (
-                <div key={index} className="flex items-center space-x-4">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-900">{activity.message}</p>
-                    <p className="text-xs text-gray-500">
-                      {activity.timestamp.toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

@@ -10,49 +10,55 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white shadow-sm border-b">
+    <header className="glass-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
-              <BookOpen className="h-6 w-6 text-white" />
+          <Link href="/" className="flex items-center space-x-2.5">
+            <div className="bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 p-2 rounded-xl shadow-md shadow-blue-500/20">
+              <BookOpen className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold gradient-text">AI Course Generator</span>
+            <span className="text-lg font-black tracking-tight gradient-text">AI Course Studio</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors">
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+            <Link href="/" className="text-slate-600 hover:text-blue-600 transition-colors">
               Home
             </Link>
-            <Link href="/features" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/features" className="text-slate-600 hover:text-blue-600 transition-colors">
               Features
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/about" className="text-slate-600 hover:text-blue-600 transition-colors">
               About
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/contact" className="text-slate-600 hover:text-blue-600 transition-colors">
               Contact
             </Link>
-            <Link href="/demo" className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/demo" className="text-slate-600 hover:text-blue-600 transition-colors">
               Demo
             </Link>
           </nav>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             <SignedOut>
               <SignInButton mode="modal">
-                <Button variant="ghost">Sign In</Button>
+                <Button variant="ghost" size="sm" className="font-semibold text-slate-700 hover:text-slate-900 rounded-xl">
+                  Sign In
+                </Button>
               </SignInButton>
-              <SignUpButton mode="modal">
-                <Button>Get Started</Button>
-              </SignUpButton>
+              <Link href="/dashboard/create">
+                <Button size="sm" className="btn-primary">
+                  Start Creating
+                </Button>
+              </Link>
             </SignedOut>
             <SignedIn>
               <Link href="/dashboard">
-                <Button variant="outline">Dashboard</Button>
+                <Button variant="outline" size="sm" className="rounded-xl border-slate-300 font-medium">
+                  Dashboard
+                </Button>
               </Link>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
