@@ -52,3 +52,14 @@ export interface CourseGenerationRequest {
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   duration: number // in hours
 }
+
+export interface CourseProgress {
+  id: string
+  courseId: string
+  userId: string
+  completedChapters: string[]
+  progressPercentage: number
+  lastAccessedChapter: string
+  completedAt?: Date
+  updatedAt: Date
+}

@@ -483,11 +483,25 @@ This final project will serve as a portfolio piece and demonstrate your proficie
 
   // Course management methods
   static async getCourses(): Promise<Course[]> {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('ai_course_generator_courses')
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed
+          }
+        }
+      } catch (e) {
+        console.error('Error reading localStorage courses', e)
+      }
+    }
     return [...this.courses]
   }
 
   static async getCourse(id: string): Promise<Course | null> {
-    return this.courses.find(course => course.id === id) || null
+    const courses = await this.getCourses()
+    return courses.find(course => course.id === id) || null
   }
 
   static async getChapters(courseId: string): Promise<Chapter[]> {
@@ -496,13 +510,31 @@ This final project will serve as a portfolio piece and demonstrate your proficie
   }
 
   static async saveCourse(course: Course): Promise<Course> {
-    // Add or update course in storage
+    // Add or update course in memory
     const existingIndex = this.courses.findIndex(c => c.id === course.id)
     if (existingIndex >= 0) {
       this.courses[existingIndex] = course
     } else {
       this.courses.push(course)
     }
+
+    // Persist to localStorage across page loads and refreshes
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('ai_course_generator_courses')
+        const coursesList: Course[] = saved ? JSON.parse(saved) : [...this.courses]
+        const idx = coursesList.findIndex(c => c.id === course.id)
+        if (idx >= 0) {
+          coursesList[idx] = course
+        } else {
+          coursesList.unshift(course)
+        }
+        localStorage.setItem('ai_course_generator_courses', JSON.stringify(coursesList))
+      } catch (e) {
+        console.error('Error saving course to localStorage', e)
+      }
+    }
+
     return course
   }
 
@@ -510,9 +542,20 @@ This final project will serve as a portfolio piece and demonstrate your proficie
     const index = this.courses.findIndex(course => course.id === id)
     if (index >= 0) {
       this.courses.splice(index, 1)
-      return true
     }
-    return false
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('ai_course_generator_courses')
+        if (saved) {
+          const coursesList: Course[] = JSON.parse(saved)
+          const filtered = coursesList.filter(c => c.id !== id)
+          localStorage.setItem('ai_course_generator_courses', JSON.stringify(filtered))
+        }
+      } catch (e) {
+        console.error('Error deleting course from localStorage', e)
+      }
+    }
+    return true
   }
 
   // Get categories

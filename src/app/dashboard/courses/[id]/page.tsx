@@ -30,11 +30,35 @@ export default function CourseDetailPage() {
   const [loading, setLoading] = useState(true)
   const [activeChapter, setActiveChapter] = useState<Chapter | null>(null)
 
+  const [completedChapters, setCompletedChapters] = useState<string[]>([])
+
   useEffect(() => {
     if (courseId) {
       loadCourseData()
+      try {
+        const saved = localStorage.getItem(`course_progress_${courseId}`)
+        if (saved) {
+          setCompletedChapters(JSON.parse(saved))
+        }
+      } catch (e) {
+        console.error('Error loading saved progress', e)
+      }
     }
   }, [courseId])
+
+  const toggleChapterComplete = (chapterId: string) => {
+    setCompletedChapters(prev => {
+      const next = prev.includes(chapterId)
+        ? prev.filter(id => id !== chapterId)
+        : [...prev, chapterId]
+      try {
+        localStorage.setItem(`course_progress_${courseId}`, JSON.stringify(next))
+      } catch (e) {
+        console.error('Error saving progress', e)
+      }
+      return next
+    })
+  }
 
   const loadCourseData = async () => {
     try {
@@ -231,9 +255,13 @@ export default function CourseDetailPage() {
                     <Clock className="h-4 w-4 mr-1" />
                     Estimated 15 minutes
                   </div>
-                  <Button>
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    Mark as Complete
+                  <Button
+                    onClick={() => toggleChapterComplete(activeChapter.id)}
+                    variant={completedChapters.includes(activeChapter.id) ? "outline" : "default"}
+                    className={completedChapters.includes(activeChapter.id) ? "border-green-600 text-green-700 hover:bg-green-50" : "bg-blue-600 hover:bg-blue-700 text-white"}
+                  >
+                    <CheckCircle className={`mr-2 h-4 w-4 ${completedChapters.includes(activeChapter.id) ? "text-green-600" : ""}`} />
+                    {completedChapters.includes(activeChapter.id) ? "Completed" : "Mark as Complete"}
                   </Button>
                 </div>
               </div>
@@ -249,13 +277,18 @@ export default function CourseDetailPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Overall Progress</span>
-                <span className="text-sm font-medium text-gray-900">0%</span>
+                <span className="text-sm font-medium text-gray-900">
+                  {chapters.length > 0 ? Math.round((completedChapters.length / chapters.length) * 100) : 0}%
+                </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: '0%' }}></div>
+                <div 
+                  className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                  style={{ width: `${chapters.length > 0 ? Math.round((completedChapters.length / chapters.length) * 100) : 0}%` }}
+                ></div>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">0 of {chapters.length} chapters completed</span>
+                <span className="text-gray-600">{completedChapters.length} of {chapters.length} chapters completed</span>
               </div>
             </div>
           </div>
@@ -271,34 +304,37 @@ export default function CourseDetailPage() {
               </div>
             </div>
             <div className="divide-y divide-gray-200">
-              {chapters.map((chapter, index) => (
-                <button
-                  key={chapter.id}
-                  onClick={() => setActiveChapter(chapter)}
-                  className={`w-full p-4 text-left hover:bg-gray-50 transition-colors ${
-                    activeChapter?.id === chapter.id ? 'bg-blue-50 border-r-2 border-blue-600' : ''
-                  }`}
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                      false ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'
-                    }`}>
-                      {index + 1}
+              {chapters.map((chapter, index) => {
+                const isCompleted = completedChapters.includes(chapter.id)
+                return (
+                  <button
+                    key={chapter.id}
+                    onClick={() => setActiveChapter(chapter)}
+                    className={`w-full p-4 text-left hover:bg-gray-50 transition-colors ${
+                      activeChapter?.id === chapter.id ? 'bg-blue-50 border-r-2 border-blue-600' : ''
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                        isCompleted ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {isCompleted ? '✓' : index + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium truncate ${isCompleted ? 'text-gray-600 line-through' : 'text-gray-900'}`}>
+                          {chapter.title}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {chapter.description}
+                        </p>
+                      </div>
+                      {isCompleted && (
+                        <CheckCircle className="h-4 w-4 text-green-600 shrink-0" />
+                      )}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
-                        {chapter.title}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {chapter.description}
-                      </p>
-                    </div>
-                    {false && (
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                    )}
-                  </div>
-                </button>
-              ))}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
