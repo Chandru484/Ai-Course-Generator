@@ -414,25 +414,30 @@ This final project will serve as a portfolio piece and demonstrate your proficie
 
   // Enhanced course generation with real APIs
   static async generateCourse(request: CourseGenerationRequest): Promise<Course> {
-    console.log('🚀 Enhanced API: Generating course with real content...', request)
+    console.log('🚀 Generating course with API:', request)
     
-    // Generate detailed course content
-    const chapters = await this.generateCourseWithOpenAI(request)
-    
-    // Add relevant videos to each chapter
-    const chaptersWithVideos = await Promise.all(
-      chapters.map(async (chapter, index) => {
-        const videoUrl = await this.searchRelevantVideos(request.topic, chapter.title)
-        return {
-          ...chapter,
-          videoUrl,
-          courseId: '', // Will be set when course is created
-        }
+    try {
+      const baseUrl = typeof window !== 'undefined' ? '' : 'http://localhost:3000'
+      const response = await fetch(`${baseUrl}/api/generate-course`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request)
       })
-    )
 
-    const courseId = Math.random().toString(36).substring(2, 15)
-    
+      if (response.ok) {
+        const data = await response.json()
+        if (data.course) {
+          await this.saveCourse(data.course)
+          return data.course
+        }
+      }
+    } catch (e) {
+      console.warn('Server course generation failed, falling back to local engine:', e)
+    }
+
+    // Fallback if network or server call fails
+    const chapters = this.generateEnhancedDemoContent(request)
+    const courseId = `course_${Date.now()}`
     const course: Course = {
       id: courseId,
       title: request.title,
@@ -442,16 +447,14 @@ This final project will serve as a portfolio piece and demonstrate your proficie
       targetAudience: request.targetAudience,
       difficulty: request.difficulty,
       duration: request.duration,
-      imageUrl: `https://images.unsplash.com/photo-${Math.random().toString(36).substring(7)}?w=400&h=300&fit=crop&q=80`,
-      chapters: chaptersWithVideos.map(chapter => ({ ...chapter, courseId })),
+      imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop&q=80',
+      chapters: chapters.map(chapter => ({ ...chapter, courseId })),
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: 'demo-user'
+      userId: 'creator'
     }
-    
-    // Save the course to storage
+
     await this.saveCourse(course)
-    
     return course
   }
 
