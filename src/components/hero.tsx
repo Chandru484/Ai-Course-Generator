@@ -1,9 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { SignUpButton } from '@clerk/nextjs'
-import { ArrowRight, BookOpen, Brain, Zap, Users, Star } from 'lucide-react'
-import Image from 'next/image'
+import { SignedIn, SignedOut, SignUpButton } from '@clerk/nextjs'
+import { ArrowRight, BookOpen, Brain, Zap, Users, Star, PlayCircle, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Hero() {
   return (
@@ -13,6 +13,9 @@ export default function Hero() {
           {/* Left Column - Text Content */}
           <div className="space-y-8">
             <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5" /> Next-Gen AI Learning
+              </div>
               <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 Generate Amazing
                 <span className="gradient-text block">AI-Powered Courses</span>
@@ -26,15 +29,29 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <SignUpButton mode="modal">
-                <Button size="lg" className="group">
-                  Start Creating Courses
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <SignedIn>
+                <Link href="/dashboard/create">
+                  <Button size="lg" className="w-full sm:w-auto group bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-md shadow-blue-500/20">
+                    Start Creating Courses
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              </SignedIn>
+              <SignedOut>
+                <Link href="/dashboard/create">
+                  <Button size="lg" className="w-full sm:w-auto group bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-md shadow-blue-500/20">
+                    Start Creating Courses
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              </SignedOut>
+
+              <Link href="/demo">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto border-gray-300 hover:bg-gray-100 font-medium">
+                  <PlayCircle className="mr-2 h-5 w-5 text-gray-600" />
+                  Watch Demo
                 </Button>
-              </SignUpButton>
-              <Button variant="outline" size="lg">
-                Watch Demo
-              </Button>
+              </Link>
             </div>
 
             {/* Stats */}
